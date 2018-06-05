@@ -1,3 +1,5 @@
+This is a fork of the Google Blockly library with additional Arduino specific blocks and an Arduino code generator. The readme for Blockly can be found below:
+
 # Blockly [![Build Status]( https://travis-ci.org/google/blockly.svg?branch=master)](https://travis-ci.org/google/blockly)
 
 
