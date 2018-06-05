@@ -1,0 +1,185 @@
+
+html {
+  height:100%;
+  margin:0;
+  padding:0;
+  background:#F9F9F9;
+}
+
+a:active, a:link, a:visited {
+  text-decoration: none;
+  color:inherit;
+}
+
+a:hover {
+  text-decoration: underline;
+  color: inherit;
+}
+
+body {
+  display:flex;
+  flex-direction: column;
+  height:100%;
+  margin:0;
+  padding:0;
+}
+
+footer {
+  padding:1em;
+  background:#a8dadc;
+}
+
+h1,h2,h3,h4,h5,h6 {
+  font-family: 'Ubuntu', sans-serif;
+  margin:0.5em;
+}
+
+header {
+  display:flex;
+  flex-direction: row;
+  align-items: center;
+  background:#457b9d;
+  color:#f1faee;
+}
+
+hr {
+  margin:0;
+  box-shadow:0px 2px 6px 0px #777;
+  z-index:2;
+}
+
+main {
+  display:flex;
+  flex:1;
+  flex-direction: column;
+  /*box-shadow:0px 0px 5px 1px #777;*/
+}
+
+main > article {
+  display:flex;
+  flex-direction: row;
+  flex:3;
+}
+
+nav {
+  display:flex;
+  flex: 1;
+  align-items: center;
+  height:100%;
+}
+
+select {
+  margin:0.2em;
+  width:100%;
+  max-width: 8em;
+}
+
+span {
+  font-family: 'Open sans', sans-serif;
+}
+
+.button {
+  display:flex;
+  align-items: center;
+  background-color:#457b9d;
+  border-radius: 3px;
+  border:none;
+  outline:none;
+  margin-left: 1em;
+  color:inherit;
+  padding:0.3em 0.5em;
+  overflow: hidden;
+  transition: color 0.3s ease,
+              background-color 0.3s ease;
+
+  -webkit-user-select: none; /* Chrome, Opera, Safari */
+  -moz-user-select: none; /* Firefox 2+ */
+  -ms-user-select: none; /* IE 10+ */
+  user-select: none; /* Standard syntax */
+}
+.button:hover {
+  background-color:#f1faee;
+  color:#202526;
+  cursor: pointer;
+}
+
+.spinAnimate {
+  -webkit-animation: spin 0.2s 1;
+    animation: spin 0.2s 1;
+}
+
+.injectionDiv {
+  width:100%;
+}
+
+.spacer1 {
+  flex:1;
+}
+
+.spacer2 {
+  flex:2;
+}
+
+#fileNameField {
+  font-family: 'Open sans', sans-serif;
+  border:none;
+  background:inherit;
+  color:inherit;
+  border-bottom:solid 1px #f1faee;
+}
+
+#blocklyDiv {
+  display: flex;
+  flex:3;
+  /*margin:16px;*/
+  margin-right:0;
+  border:1px solid #AAA;
+}
+
+#codeView {
+  display:flex;
+  flex-direction: column;
+  flex:1;
+  margin-left:0;
+  padding:0;
+  border:1px solid #AAA;
+  overflow: hidden;
+}
+
+#generatedCode {
+  overflow-y: scroll;
+  overflow-x: auto;
+  display: flex;
+  flex-direction: column;
+  flex-grow:1;
+  height:0;
+}
+
+#setTitleContainer {
+  display:flex;
+  flex-direction: row;
+}
+
+@keyframes fadeIn {
+  from {opacity:0;}
+  to {opacity:1;}
+}
+
+@keyframes fadeOut {
+  from {opacity:1;}
+  to {opacity:0;}
+}
+
+@keyframes spin {
+  0% {
+    transform:rotate(0deg);
+    opacity:1;
+  }
+  25% {opacity:0.50;}
+  50% {opacity:0;}
+  75% {opacity:0.50;}
+  100% {
+    transform: rotate(360deg);
+    opacity:1;
+  }
+}
