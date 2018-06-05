@@ -1,0 +1,103 @@
+﻿<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>ABI</title>
+    <link rel="stylesheet" text="text/css" href="css/index.css">
+    <link rel="stylesheet" text="text/css" href="css/notification.css">
+
+    <!-- Font link -->
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300|Ubuntu:400" rel="stylesheet">
+
+
+    <!--<script src="js/blockly/blockly_uncompressed.js"></script>-->
+
+    <!-- instead of arduino_compressed.js -->
+    <!--<script src="js/blockly/generators/arduino.js"></script>
+    <script src="js/blockly/generators/arduino/control.js"></script>
+    <script src="js/blockly/generators/arduino/loops.js"></script>
+    <script src="js/blockly/generators/arduino/io.js"></script>
+    <script src="js/blockly/generators/arduino/serial.js"></script>
+    <script src="js/blockly/generators/arduino/logic.js"></script>
+    <script src="js/blockly/generators/arduino/math.js"></script>
+    <script src="js/blockly/generators/arduino/typed_variables.js"></script>
+    <script src="js/blockly/generators/arduino/procedures.js"></script>-->
+
+    <!-- keep loading of msg file before block definitions to allow for custom colours -->
+    <!--<script src="js/blockly/msg/js/en.js"></script>-->
+    <!--<script src="js/blockly/custom_colours.js"></script>-->
+
+    <!-- instead of blocks_compressed.js -->
+    <!--<script src="js/blockly/blocks/control.js"></script>
+    <script src="js/blockly/blocks/loops.js"></script>
+    <script src="js/blockly/blocks/logic.js"></script>
+    <script src="js/blockly/blocks/io.js"></script>
+    <script src="js/blockly/blocks/serial.js"></script>
+    <script src="js/blockly/blocks/math.js"></script>
+    <script src="js/blockly/blocks/variables.js"></script>
+    <script src="js/blockly/blocks/typed_variables.js"></script>
+    <script src="js/blockly/blocks/procedures.js"></script>-->
+
+    <!-- google-code-prettify for generated code -->
+    <script src="https://cdn.rawgit.com/google/code-prettify/master/loader/run_prettify.js"></script>
+  </head>
+  <body>
+    <header>
+      <h1>Arduino Editor</h1>
+      <nav>
+        <div id="setTitleContainer">
+          <input id="fileNameField" type="text" value="Project Name" autocomplete="off"/>
+        </div>
+        <span id="clearWorkspaceButton" class="button"><i class="fa fa-trash" aria-hidden="true" title="Clear project workspace"></i>&nbsp; Clear Project</span>
+        <span id="loadButton" class="button" ><i class="fa fa-upload" aria-hidden="true" title="Load a program from your computer"></i>&nbsp; Load</span>
+        <span id="saveButton" class="button"><i class="fa fa-floppy-o" aria-hidden="true" title="Save your program"></i>&nbsp; Save</span>
+        <span class="spacer2"></span>
+        <select id="boardSelect" name="boardType"><option value="def">board</option></select>
+        <select id="mcuSelect" name="mcuType"><option value="def">chip</option></select>
+        <span id="compileButton" class="button" ><i class="fa fa-wrench" aria-hidden="true" title="Compile the program"></i>&nbsp; Compile</span>
+        <span id="uploadButton" class="button" ><i class="fa fa-arrow-circle-right" aria-hidden="true" title="Upload the program to an Arduino"></i>&nbsp; Upload</span>
+        <span class="spacer1"></span>
+      </nav>
+    </header>
+    <main>
+      <article>
+        <div id="blocklyDiv"></div>
+
+
+        <aside id="codeView">
+          <h3 id="codeViewTitle">Arduino Code</h3>
+          <hr width="100%"/>
+          <div id="generatedCode"><pre id="codeFormatArea"></pre></div>
+        </aside>
+      </article>
+
+      <div id="notificationView">
+        <div id="notificationTitleContainer">
+          <h3>Notifications</h3>
+          <span class="spacer1"></span>
+          <span id="clearNotificationsButton" class="button"><i class="fa fa-trash" aria-hidden="true" title="Clear project workspace"></i>&nbsp; Clear Notifications</span>
+        </div>
+        <hr width="100%"/>
+        <div id="notificationBox"></div>
+      </div>
+    </main>
+    </body>
+  <!-- fontawesome link -->
+  <script src="https://use.fontawesome.com/f7250c25b8.js"></script>
+  <!-- use the below tags for debug before building -->
+  <!--<script src="ide/ide_toolbox.js"></script>
+  <script src="ide/ide_bindings.js"></script>
+  <script src="ide/ide_client.js"></script>
+  <script src="ide/ide.js"></script>-->
+
+
+  <script src="js/notification.js"></script>
+  <!-- built file. Contains blockly and IDE -->
+  <script src="js/ide_compressed.js"></script>
+
+  <script>
+    window.onload = function () {
+      Ide.init();
+    }
+  </script>
+</html>
