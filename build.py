@@ -104,10 +104,16 @@ class Gen_uncompressed(threading.Thread):
     f = open(self.target_filename, 'w')
     f.write(HEADER)
     f.write("""
-this.IS_NODE_JS = !!(typeof module !== 'undefined' && module.exports);
+var isNodeJS = !!(typeof module !== 'undefined' && module.exports &&
+                  typeof window === 'undefined');
 
-this.BLOCKLY_DIR = (function(root) {
-  if (!root.IS_NODE_JS) {
+if (isNodeJS) {
+  var window = {};
+  require('closure-library');
+}
+
+window.BLOCKLY_DIR = (function() {
+  if (!isNodeJS) {
     // Find name of current directory.
     var scripts = document.getElementsByTagName('script');
     var re = new RegExp('(.+)[\/]blockly_(.*)uncompressed\.js$');
@@ -120,23 +126,21 @@ this.BLOCKLY_DIR = (function(root) {
     alert('Could not detect Blockly\\'s directory name.');
   }
   return '';
-})(this);
+})();
 
-this.BLOCKLY_BOOT = function(root) {
-  if (root.IS_NODE_JS) {
-    require('google-closure-library');
-  } else if (typeof goog == 'undefined') {
-    alert('Error: Closure not found.  Read this:\\n' +
-          'developers.google.com/blockly/guides/modify/web/closure');
-  }
-
+window.BLOCKLY_BOOT = function() {
   var dir = '';
-  if (root.IS_NODE_JS) {
+  if (isNodeJS) {
+    require('closure-library');
     dir = 'blockly';
   } else {
-    dir = this.BLOCKLY_DIR.match(/[^\\/]+$/)[0];
+    // Execute after Closure has loaded.
+    if (!window.goog) {
+      alert('Error: Closure not found.  Read this:\\n' +
+            'developers.google.com/blockly/guides/modify/web/closure');
+    }
+    dir = window.BLOCKLY_DIR.match(/[^\\/]+$/)[0];
   }
-  // Execute after Closure has loaded.
 """)
     add_dependency = []
     base_path = calcdeps.FindClosureBasePath(self.search_paths)
@@ -163,21 +167,20 @@ this.BLOCKLY_BOOT = function(root) {
       f.write("goog.require('%s');\n" % provide)
 
     f.write("""
-delete root.BLOCKLY_DIR;
-delete root.BLOCKLY_BOOT;
-delete root.IS_NODE_JS;
+delete this.BLOCKLY_DIR;
+delete this.BLOCKLY_BOOT;
 };
 
-if (this.IS_NODE_JS) {
-  this.BLOCKLY_BOOT(this);
+if (isNodeJS) {
+  window.BLOCKLY_BOOT();
   module.exports = Blockly;
 } else {
   // Delete any existing Closure (e.g. Soy's nogoog_shim).
   document.write('<script>var goog = undefined;</script>');
   // Load fresh Closure Library.
-  document.write('<script src="' + this.BLOCKLY_DIR +
+  document.write('<script src="' + window.BLOCKLY_DIR +
       '/../closure-library/closure/goog/base.js"></script>');
-  document.write('<script>this.BLOCKLY_BOOT(this);</script>');
+  document.write('<script>window.BLOCKLY_BOOT();</script>');
 }
 """)
     f.close()
@@ -211,6 +214,7 @@ class Gen_compressed(threading.Thread):
       self.gen_generator("php")
       self.gen_generator("lua")
       self.gen_generator("dart")
+      self.gen_generator("arduino")
 
   def gen_core(self):
     target_filename = "blockly_compressed.js"
@@ -223,7 +227,6 @@ class Gen_compressed(threading.Thread):
         ("output_info", "warnings"),
         ("output_info", "errors"),
         ("output_info", "statistics"),
-        ("warning_level", "DEFAULT"),
       ]
 
     # Read in all the source files.
@@ -252,13 +255,39 @@ class Gen_compressed(threading.Thread):
         ("output_info", "warnings"),
         ("output_info", "errors"),
         ("output_info", "statistics"),
-        ("warning_level", "DEFAULT"),
       ]
 
     # Read in all the source files.
     filenames = calcdeps.CalculateDependencies(self.search_paths,
         [os.path.join("accessible", "app.component.js")])
     filenames.sort()  # Deterministic build.
+    for filename in filenames:
+      # Filter out the Closure files (the compiler will add them).
+      if filename.startswith(os.pardir + os.sep):  # '../'
+        continue
+      f = open(filename)
+      params.append(("js_code", "".join(f.readlines())))
+      f.close()
+
+    self.do_compile(params, target_filename, filenames, "")
+
+  def gen_accessible(self):
+    target_filename = "blockly_accessible_compressed.js"
+    # Define the parameters for the POST request.
+    params = [
+        ("compilation_level", "SIMPLE_OPTIMIZATIONS"),
+        ("use_closure_library", "true"),
+        ("language_out", "ES5"),
+        ("output_format", "json"),
+        ("output_info", "compiled_code"),
+        ("output_info", "warnings"),
+        ("output_info", "errors"),
+        ("output_info", "statistics"),
+      ]
+
+    # Read in all the source files.
+    filenames = calcdeps.CalculateDependencies(self.search_paths,
+        [os.path.join("accessible", "app.component.js")])
     for filename in filenames:
       # Filter out the Closure files (the compiler will add them).
       if filename.startswith(os.pardir + os.sep):  # '../'
@@ -279,7 +308,6 @@ class Gen_compressed(threading.Thread):
         ("output_info", "warnings"),
         ("output_info", "errors"),
         ("output_info", "statistics"),
-        ("warning_level", "DEFAULT"),
       ]
 
     # Read in all the source files.
@@ -306,7 +334,6 @@ class Gen_compressed(threading.Thread):
         ("output_info", "warnings"),
         ("output_info", "errors"),
         ("output_info", "statistics"),
-        ("warning_level", "DEFAULT"),
       ]
 
     # Read in all the source files.
