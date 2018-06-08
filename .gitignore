@@ -70,4 +70,4 @@ typings/
 .serverless
 
 #Build manifest
-.MF
+*.MF
