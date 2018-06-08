@@ -5,6 +5,9 @@ npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 
+#closure-compiler app
+closure-compiler.jar
+
 # Runtime data
 pids
 *.pid
