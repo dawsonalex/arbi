@@ -51,8 +51,6 @@ goog.require('Blockly.Arduino.TypedVariables');
 //goog.require('Blockly.Arduino.VariablesDynamic'); to be added
 //goog.require('Blockly.Arduino.Variables'); to be added
 
-window.Ide = Ide;
-
 Ide.DEFAULT_SKETCH_NAME = 'project_name';
 
 Ide.INITIAL_WORKSPACE_XML = '<xml><block type="setup_control" deletable="false" x="90" y="30"></block>' +

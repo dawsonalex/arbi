@@ -7,6 +7,8 @@
 
 goog.provide('Ide.Toolbox.VariableFlyout');
 
+goog.require('Blockly.Xml');
+
 /**
  * Set up callbacks for variable buttons in the toolbox
  */
