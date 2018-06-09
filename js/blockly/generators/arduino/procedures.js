@@ -7,7 +7,7 @@
 
 goog.provide('Blockly.Arduino.procedures');
 
-goog.require('Blockly.Blocks');
+goog.require('Blockly.Arduino');
 
 Blockly.Arduino['procedures_defnoreturn'] = function (block) {
   // Define a procedure with a return value.
