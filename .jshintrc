@@ -93,6 +93,7 @@
                         "Websocket": true,
                         "ConnectionUtils": true,
                         "JSONWebSocket": true,
-                        "Ide":true
+                        "Ide":true,
+                        "module":true
                       }
 }
